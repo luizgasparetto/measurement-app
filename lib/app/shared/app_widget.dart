@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:measurement/app/modules/presentation/ui/pages/home_page.dart';
+import 'package:measurement/app/modules/presentation/ui/pages/login_page.dart';
 import 'package:measurement/app/shared/injection/bloc_providers.dart';
 import 'package:measurement/app/shared/routes/routes.dart';
 import 'package:measurement/app/shared/themes/main_theme.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           title: 'Object Measurement',
           debugShowCheckedModeBanner: false,
           onGenerateRoute: AppRouter.onGenerateRoutes,
-          initialRoute: HomePage.routeName,
+          initialRoute: LoginPage.routeName,
           theme: MainTheme.getTheme(),
         ),
       ),
