@@ -11,7 +11,14 @@ class CustomCameraCard extends StatelessWidget {
       width: double.infinity,
       height: 150.h,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        // color: Theme.of(context).primaryColor,
+        gradient: const LinearGradient(
+          colors: [
+            Color.fromRGBO(190, 65, 217, 1),
+            Color.fromRGBO(232, 94, 186, 1),
+            Color.fromRGBO(255, 152, 128, 1),
+          ],
+        ),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(
@@ -19,18 +26,23 @@ class CustomCameraCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 5.h),
             Text(
               "Take a picture",
               style: TextStyle(
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 20.sp,
+                fontSize: 26.sp,
               ),
             ),
-            SizedBox(height: 5.h),
-            Text(
-              "Use your camera :)",
-              style: TextStyle(
-                fontSize: 15.sp,
+            Padding(
+              padding: EdgeInsets.only(left: 3.w),
+              child: Text(
+                "Use your camera!",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17.sp,
+                ),
               ),
             ),
             const Spacer(),

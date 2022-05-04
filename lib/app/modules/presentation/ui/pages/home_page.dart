@@ -9,6 +9,7 @@ import 'package:iconly/iconly.dart';
 import 'package:measurement/app/modules/presentation/blocs/list_objects/list_objects_bloc.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_camera_card.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_object_card.dart';
+import 'package:measurement/app/modules/presentation/ui/widgets/shimmer/skeleton_object_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -109,9 +110,32 @@ class HomePage extends StatelessWidget {
                   height: 180.h,
                   child: Stack(
                     children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 4.h),
+                        child: Container(
+                          width: double.infinity,
+                          height: 150.h,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color.fromRGBO(190, 65, 217, 1),
+                                Color.fromRGBO(232, 94, 186, 1),
+                                Color.fromRGBO(255, 152, 128, 1),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                      ),
                       const CustomCameraCard(),
                       Padding(
-                        padding: EdgeInsets.only(left: 160.w, bottom: 29.h),
+                        padding: EdgeInsets.only(left: 160.w, bottom: 30.h),
                         child: SizedBox(
                           width: 150.h,
                           height: 180.h,
@@ -143,7 +167,17 @@ class HomePage extends StatelessWidget {
                 BlocBuilder<ListObjectsBloc, ListObjectsState>(
                   builder: (context, state) {
                     if (state is ListObjectsLoadingState) {
-                      return const Center(child: CircularProgressIndicator());
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 3,
+                        itemBuilder: (_, __) {
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 10.h),
+                            child: const SkeletonObjectCard(),
+                          );
+                        },
+                      );
                     } else if (state is ListObjectsLoadedState) {
                       return ListView.builder(
                         shrinkWrap: true,

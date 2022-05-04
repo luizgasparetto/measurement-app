@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:measurement/app/modules/presentation/ui/pages/auth/login_page.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/home_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_input_form.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
-  static const String routeName = "/login";
+  static const String routeName = "/sign-up";
 
   static Route route() {
     return MaterialPageRoute(
-      builder: (_) => const LoginPage(),
+      builder: (_) => const SignUpPage(),
       settings: const RouteSettings(name: routeName),
     );
   }
@@ -32,7 +33,7 @@ class LoginPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Sign in.',
+                    'Sign up.',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 32.sp,
@@ -52,6 +53,8 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 70.h),
+            const CustomInputForm(label: 'Full Name', paddingLeft: 20),
+            SizedBox(height: 15.h),
             const CustomInputForm(label: 'Email', paddingLeft: 20),
             SizedBox(height: 15.h),
             const CustomInputForm(label: 'Password', paddingLeft: 20),
@@ -61,7 +64,7 @@ class LoginPage extends StatelessWidget {
                 context,
                 HomePage.routeName,
               ),
-              label: "Login",
+              label: "Sign up",
               width: double.infinity,
               height: 45.h,
             ),
@@ -72,7 +75,7 @@ class LoginPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account?",
+                      "Already have an account?",
                       style: TextStyle(
                         color: Theme.of(context).dialogBackgroundColor,
                         fontSize: 15.sp,
@@ -81,33 +84,19 @@ class LoginPage extends StatelessWidget {
                     ),
                     TextButton(
                       child: Text(
-                        "Create Account",
+                        "Sign in.",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 15.sp,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () => Navigator.pushReplacementNamed(
+                        context,
+                        LoginPage.routeName,
+                      ),
                     )
                   ],
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 30.h),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: TextButton(
-                      child: Text(
-                        "Forgot Password?",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15.sp,
-                        ),
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
                 ),
               ],
             ),
