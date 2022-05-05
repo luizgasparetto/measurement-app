@@ -57,10 +57,11 @@ class CustomObjectCard extends StatelessWidget {
                         color: Colors.white,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
                       ),
                     ),
                     Text(
-                      "${width.toStringAsFixed(1)} cm",
+                      "${width.toStringAsFixed(2)} cm",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.sp,
@@ -77,10 +78,11 @@ class CustomObjectCard extends StatelessWidget {
                         color: Colors.white,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
                       ),
                     ),
                     Text(
-                      "${height.toStringAsFixed(1)} cm",
+                      "${height.toStringAsFixed(2)} cm",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.sp,

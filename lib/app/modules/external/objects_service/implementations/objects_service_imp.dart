@@ -3,7 +3,7 @@ import 'package:http/http.dart';
 import '../objects_service.dart';
 
 class ObjectsServiceImp implements ObjectsService {
-  final String urlAPI = "https://api.vizion.dev";
+  final String urlAPI = "http://18.231.54.15";
   final Client http;
 
   ObjectsServiceImp(this.http);

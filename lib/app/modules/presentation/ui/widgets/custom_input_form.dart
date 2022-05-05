@@ -5,17 +5,19 @@ class CustomInputForm extends StatelessWidget {
   final String label;
   final double paddingLeft;
   final TextAlign textAlign;
+  final void Function(String)? onChangedFunction;
 
   const CustomInputForm({
     Key? key,
     required this.label,
+    required this.onChangedFunction,
     this.paddingLeft = 0,
     this.textAlign = TextAlign.start,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextField(
       textAlign: textAlign,
       style: const TextStyle(
         color: Colors.white,
@@ -42,6 +44,7 @@ class CustomInputForm extends StatelessWidget {
           ),
         ),
       ),
+      onChanged: onChangedFunction,
     );
   }
 }
