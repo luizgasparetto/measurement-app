@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:measurement/app/modules/presentation/ui/pages/home_page.dart';
+import 'package:get_it/get_it.dart';
+import 'package:measurement/app/modules/presentation/blocs/auth/auth_bloc.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_input_form.dart';
 
@@ -22,10 +23,10 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final ValueNotifier _nameNotifier = ValueNotifier("");
-
   final ValueNotifier _emailNotifier = ValueNotifier("");
-
   final ValueNotifier _passwordNotifier = ValueNotifier("");
+
+  final authBloc = GetIt.I.get<AuthBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -83,13 +84,18 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               SizedBox(height: 80.h),
               CustomElevatedButton(
-                onPressed: () => Navigator.pushReplacementNamed(
-                  context,
-                  HomePage.routeName,
-                ),
                 label: "Sign up",
                 width: double.infinity,
                 height: 45.h,
+                onPressed: () {
+                  authBloc.add(
+                    AuthSignUpEvent(
+                      name: _nameNotifier.value,
+                      email: _emailNotifier.value,
+                      password: _passwordNotifier.value,
+                    ),
+                  );
+                },
               ),
               SizedBox(height: 10.h),
               Stack(
@@ -114,15 +120,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             fontSize: 15.sp,
                           ),
                         ),
-                        // onPressed: () => Navigator.pushReplacementNamed(
-                        //   context,
-                        //   LoginPage.routeName,
-                        // ),
-                        onPressed: () {
-                          print(_nameNotifier.value);
-                          print(_emailNotifier.value);
-                          print(_passwordNotifier.value);
-                        },
+                        onPressed: () {},
                       )
                     ],
                   ),
