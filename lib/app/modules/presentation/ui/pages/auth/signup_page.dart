@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:measurement/app/modules/presentation/blocs/auth/auth_bloc.dart';
+import 'package:measurement/app/modules/presentation/ui/pages/auth/login_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_input_form.dart';
 
@@ -120,7 +121,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             fontSize: 15.sp,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () => Navigator.pushReplacementNamed(
+                          context,
+                          LoginPage.routeName,
+                        ),
                       )
                     ],
                   ),

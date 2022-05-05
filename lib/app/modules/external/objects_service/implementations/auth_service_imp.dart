@@ -2,9 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:measurement/app/modules/external/objects_service/auth_service.dart';
 
+class IResponseAuth {
+  final String token;
+
+  IResponseAuth(this.token);
+}
+
 class AuthServiceImp implements AuthService {
   final String urlAPI = dotenv.env["API_URL"]!;
-  //final Client http;
   final Dio dio;
 
   AuthServiceImp(this.dio);
@@ -19,5 +24,15 @@ class AuthServiceImp implements AuthService {
         'password': password,
       },
     );
+  }
+
+  @override
+  Future<IResponseAuth> authenticateUser(String email, String password) async {
+    final response = await dio.post('$urlAPI/sessions', data: {
+      'email': email,
+      'password': password,
+    });
+
+    return IResponseAuth(response.data['token']);
   }
 }

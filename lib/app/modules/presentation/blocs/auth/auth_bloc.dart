@@ -10,7 +10,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this.authUseCase) : super(AuthLoadingState()) {
     on<AuthSignUpEvent>((event, emit) async {
-      await authUseCase.createUser(event.name, event.email, event.password);
+      try {
+        await authUseCase.createUser(event.name, event.email, event.password);
+      } catch (e) {
+        emit(AuthErrorState());
+      }
+    });
+
+    on<AuthSignInEvent>((event, emit) async {
+      try {
+        await authUseCase.authenticateUser(event.email, event.password);
+        emit(AuthSignInState());
+      } catch (e) {
+        emit(AuthErrorState());
+      }
     });
   }
 }

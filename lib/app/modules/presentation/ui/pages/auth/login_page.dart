@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
+import 'package:measurement/app/modules/presentation/blocs/auth/auth_bloc.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/auth/signup_page.dart';
-import 'package:measurement/app/modules/presentation/ui/pages/home_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_input_form.dart';
 
@@ -23,8 +24,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final ValueNotifier _emailNotifier = ValueNotifier("");
-
   final ValueNotifier _passwordNotifier = ValueNotifier("");
+
+  final authBloc = GetIt.I.get<AuthBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -76,13 +78,17 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 80.h),
               CustomElevatedButton(
-                onPressed: () => Navigator.pushReplacementNamed(
-                  context,
-                  HomePage.routeName,
-                ),
                 label: "Login",
                 width: double.infinity,
                 height: 45.h,
+                onPressed: () {
+                  authBloc.add(
+                    AuthSignInEvent(
+                      email: _emailNotifier.value,
+                      password: _passwordNotifier.value,
+                    ),
+                  );
+                },
               ),
               SizedBox(height: 10.h),
               Stack(

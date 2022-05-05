@@ -9,5 +9,5 @@ Future<void> main() async {
   await dotenv.load();
   Injection.inject();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }

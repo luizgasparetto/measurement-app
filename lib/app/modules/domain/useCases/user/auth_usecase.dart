@@ -17,4 +17,12 @@ class AuthUseCase {
 
     await authRepository.signUp(name, email, password);
   }
+
+  Future<void> authenticateUser(String email, String password) async {
+    if (email.isEmpty || password.isEmpty) {
+      throw AuthException.fromCode('missing-fields');
+    }
+
+    await authRepository.authenticateUser(email, password);
+  }
 }
