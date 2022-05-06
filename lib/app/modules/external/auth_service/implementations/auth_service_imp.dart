@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:measurement/app/modules/external/objects_service/auth_service.dart';
+import 'package:measurement/app/modules/external/auth_service/auth_service.dart';
 
 class IResponseAuth {
   final String token;

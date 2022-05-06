@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:measurement/app/modules/domain/useCases/user/auth_usecase.dart';
+import 'package:measurement/app/modules/external/auth_service/implementations/prefs_service_imp.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -19,8 +20,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<AuthSignInEvent>((event, emit) async {
       try {
-        await authUseCase.authenticateUser(event.email, event.password);
-        emit(AuthSignInState());
+        final token =
+            await authUseCase.authenticateUser(event.email, event.password);
+
+        if (token.isNotEmpty) {
+          await PrefsServiceImp.saveUser(token);
+          final authResult = await PrefsServiceImp.isAuth();
+          emit(AuthSignInState(authResult));
+        }
       } catch (e) {
         emit(AuthErrorState());
       }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import 'package:measurement/app/modules/presentation/blocs/auth/auth_bloc.dart';
+import 'package:measurement/app/modules/presentation/controllers/auth_controller.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/auth/signup_page.dart';
+import 'package:measurement/app/modules/presentation/ui/pages/home_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_input_form.dart';
 
@@ -26,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   final ValueNotifier _emailNotifier = ValueNotifier("");
   final ValueNotifier _passwordNotifier = ValueNotifier("");
 
-  final authBloc = GetIt.I.get<AuthBloc>();
+  final authController = GetIt.I.get<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -81,13 +82,15 @@ class _LoginPageState extends State<LoginPage> {
                 label: "Login",
                 width: double.infinity,
                 height: 45.h,
-                onPressed: () {
-                  authBloc.add(
-                    AuthSignInEvent(
-                      email: _emailNotifier.value,
-                      password: _passwordNotifier.value,
-                    ),
+                onPressed: () async {
+                  final result = await authController.signIn(
+                    _emailNotifier.value,
+                    _passwordNotifier.value,
                   );
+
+                  if (result) {
+                    Navigator.pushReplacementNamed(context, HomePage.routeName);
+                  }
                 },
               ),
               SizedBox(height: 10.h),
