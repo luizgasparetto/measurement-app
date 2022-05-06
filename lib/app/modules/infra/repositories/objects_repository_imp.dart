@@ -11,7 +11,7 @@ class ObjectsRepositoryImp implements ObjectsRepository {
   ObjectsRepositoryImp(this.objectsServiceImp);
 
   @override
-  Future<void> create(double width, double height) async {}
+  Future<void> create(String urlImage) async {}
 
   @override
   Future<List<ObjectEntity>> list() async {
