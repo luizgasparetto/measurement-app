@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:iconly/iconly.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:measurement/app/modules/domain/repositories/camera_repository.dart';
 
 class CustomCameraCard extends StatelessWidget {
@@ -71,7 +72,7 @@ class CustomCameraCard extends StatelessWidget {
                   primary: Theme.of(context).primaryColorDark,
                 ),
                 onPressed: () async {
-                  await homeRepository.selectImage();
+                  await homeRepository.selectImage(ImageSource.gallery);
                   Navigator.pushNamed(context, '/image');
                 },
               ),

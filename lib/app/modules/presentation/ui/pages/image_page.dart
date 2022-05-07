@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:measurement/app/modules/domain/repositories/camera_repository.dart';
+import 'package:measurement/app/modules/presentation/blocs/create_object/create_object_bloc.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
 
 class ImagePage extends StatelessWidget {
@@ -21,6 +22,7 @@ class ImagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cameraRepository = GetIt.I.get<CameraRepository>();
+    final createObjectBloc = GetIt.I.get<CreateObjectBloc>();
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColorDark,
@@ -51,11 +53,23 @@ class ImagePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.h),
-            SizedBox(
-              width: double.infinity,
-              child: ClipRRect(
-                child: Image.file(File(cameraRepository.image.value!.path)),
-                borderRadius: BorderRadius.circular(10),
+            Center(
+              child: SizedBox(
+                width: 400.w,
+                height: 420.h,
+                child: cameraRepository.image.value?.path != null
+                    ? ClipRRect(
+                        child: Image.file(
+                          File(cameraRepository.image.value!.path),
+                          fit: BoxFit.fill,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      )
+                    : Container(
+                        width: 100.w,
+                        height: 100.w,
+                        color: Colors.grey,
+                      ),
               ),
             ),
             SizedBox(height: 40.h),
@@ -63,8 +77,8 @@ class ImagePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SizedBox(
-                  height: 40.h,
-                  width: 140.w,
+                  height: 43.h,
+                  width: 145.w,
                   child: ElevatedButton(
                     child: Text(
                       "Retake",
@@ -90,7 +104,13 @@ class ImagePage extends StatelessWidget {
                 CustomElevatedButton(
                   label: 'Results',
                   width: 140.w,
-                  onPressed: () {},
+                  onPressed: () async {
+                    createObjectBloc.add(
+                      UploadObjectEvent(
+                        File(cameraRepository.image.value!.path),
+                      ),
+                    );
+                  },
                 )
               ],
             )

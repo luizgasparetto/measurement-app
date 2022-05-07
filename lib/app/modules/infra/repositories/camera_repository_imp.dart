@@ -8,9 +8,9 @@ class CameraRepositoryImp implements CameraRepository {
   final _image = ValueNotifier<XFile?>(null);
 
   @override
-  Future<void> selectImage() async {
+  Future<void> selectImage(ImageSource imageSource) async {
     try {
-      XFile? file = await ImagePicker().pickImage(source: ImageSource.camera);
+      XFile? file = await ImagePicker().pickImage(source: imageSource);
       if (file != null) {
         _image.value = file;
       }

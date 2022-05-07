@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart';
 import 'package:measurement/app/modules/domain/repositories/auth_repository.dart';
 import 'package:measurement/app/modules/domain/repositories/camera_repository.dart';
 import 'package:measurement/app/modules/domain/useCases/objects/objects_usecase.dart';
@@ -13,6 +12,7 @@ import 'package:measurement/app/modules/infra/repositories/auth_repository_imp.d
 import 'package:measurement/app/modules/infra/repositories/camera_repository_imp.dart';
 import 'package:measurement/app/modules/infra/repositories/objects_repository_imp.dart';
 import 'package:measurement/app/modules/presentation/blocs/auth/auth_bloc.dart';
+import 'package:measurement/app/modules/presentation/blocs/create_object/create_object_bloc.dart';
 import 'package:measurement/app/modules/presentation/blocs/list_objects/list_objects_bloc.dart';
 import 'package:measurement/app/modules/presentation/controllers/auth_controller.dart';
 
@@ -23,8 +23,7 @@ class Injection {
     final getIt = GetIt.instance;
 
     // External
-    getIt.registerLazySingleton<ObjectsService>(
-        () => ObjectsServiceImp(Client()));
+    getIt.registerLazySingleton<ObjectsService>(() => ObjectsServiceImp(Dio()));
 
     getIt.registerLazySingleton<AuthService>(() => AuthServiceImp(Dio()));
 
@@ -43,6 +42,7 @@ class Injection {
     // BLOC
     getIt.registerSingleton(ListObjectsBloc(getIt()));
     getIt.registerSingleton(AuthBloc(getIt()));
+    getIt.registerSingleton(CreateObjectBloc(getIt()));
 
     // CONTROLLERS
 

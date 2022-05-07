@@ -21,4 +21,12 @@ class PrefsServiceImp {
 
     return false;
   }
+
+  static Future<String> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonResult = prefs.getString(_key);
+
+    final mapUser = jsonDecode(jsonResult!);
+    return mapUser["token"];
+  }
 }
