@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:iconly/iconly.dart';
+import 'package:measurement/app/modules/domain/repositories/camera_repository.dart';
 
 class CustomCameraCard extends StatelessWidget {
   const CustomCameraCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final homeRepository = GetIt.I.get<CameraRepository>();
+
     return Container(
       width: double.infinity,
       height: 150.h,
       decoration: BoxDecoration(
-        // color: Theme.of(context).primaryColor,
         gradient: const LinearGradient(
           colors: [
             Color.fromRGBO(190, 65, 217, 1),
@@ -67,7 +70,10 @@ class CustomCameraCard extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   primary: Theme.of(context).primaryColorDark,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await homeRepository.selectImage();
+                  Navigator.pushNamed(context, '/image');
+                },
               ),
             )
           ],

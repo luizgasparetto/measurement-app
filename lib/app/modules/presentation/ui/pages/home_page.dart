@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:iconly/iconly.dart';
 import 'package:measurement/app/modules/presentation/blocs/list_objects/list_objects_bloc.dart';
+import 'package:measurement/app/modules/presentation/ui/pages/user_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_camera_card.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_object_card.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/shimmer/skeleton_object_card.dart';
@@ -52,7 +53,8 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          Navigator.pushNamed(context, UserPage.routeName),
                       icon: Icon(
                         IconlyLight.profile,
                         size: 28.w,
