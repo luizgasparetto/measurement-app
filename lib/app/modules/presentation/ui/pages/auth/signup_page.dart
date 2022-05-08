@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import 'package:measurement/app/modules/presentation/blocs/auth/auth_bloc.dart';
+import 'package:measurement/app/modules/presentation/controllers/auth_controller.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/auth/login_page.dart';
+import 'package:measurement/app/modules/presentation/ui/pages/home_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_input_form.dart';
 
@@ -27,7 +28,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final ValueNotifier _emailNotifier = ValueNotifier("");
   final ValueNotifier _passwordNotifier = ValueNotifier("");
 
-  final authBloc = GetIt.I.get<AuthBloc>();
+  final authController = GetIt.I.get<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
               CustomInputForm(
                 label: 'Password',
                 paddingLeft: 20,
+                obscureText: true,
                 onChangedFunction: (value) => _passwordNotifier.value = value,
               ),
               SizedBox(height: 80.h),
@@ -88,14 +90,16 @@ class _SignUpPageState extends State<SignUpPage> {
                 label: "Sign up",
                 width: double.infinity,
                 height: 45.h,
-                onPressed: () {
-                  authBloc.add(
-                    AuthSignUpEvent(
-                      name: _nameNotifier.value,
-                      email: _emailNotifier.value,
-                      password: _passwordNotifier.value,
-                    ),
+                onPressed: () async {
+                  final result = await authController.signUp(
+                    _nameNotifier.value,
+                    _emailNotifier.value,
+                    _passwordNotifier.value,
                   );
+
+                  if (result) {
+                    Navigator.pushReplacementNamed(context, HomePage.routeName);
+                  }
                 },
               ),
               SizedBox(height: 10.h),

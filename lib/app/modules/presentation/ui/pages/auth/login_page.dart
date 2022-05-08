@@ -75,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
               CustomInputForm(
                 label: 'Password',
                 paddingLeft: 20,
+                obscureText: true,
                 onChangedFunction: (value) => _passwordNotifier.value = value,
               ),
               SizedBox(height: 80.h),

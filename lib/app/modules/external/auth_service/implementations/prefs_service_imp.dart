@@ -29,4 +29,9 @@ class PrefsServiceImp {
     final mapUser = jsonDecode(jsonResult!);
     return mapUser["token"];
   }
+
+  static Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString(_key, jsonEncode({"token": null, "isAuth": false}));
+  }
 }

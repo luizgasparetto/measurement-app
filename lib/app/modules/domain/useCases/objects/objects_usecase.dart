@@ -10,8 +10,9 @@ class ObjectsUseCase {
 
   Future<List<ObjectEntity>> getObjects() async {
     final objects = await objectsRepository.list();
+    final lastObjects = objects.reversed.toList();
 
-    return objects.isEmpty ? [] : objects;
+    return lastObjects.isEmpty ? [] : lastObjects;
   }
 
   Future<void> createObjects(File file) async {
