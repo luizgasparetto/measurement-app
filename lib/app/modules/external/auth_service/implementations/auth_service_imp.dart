@@ -35,4 +35,14 @@ class AuthServiceImp implements AuthService {
 
     return IResponseAuth(response.data['token']);
   }
+
+  @override
+  Future<Map<String, dynamic>> getUser(String token) async {
+    final response = await dio.get(
+      '$urlAPI/users',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+
+    return response.data;
+  }
 }

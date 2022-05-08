@@ -24,7 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             await authUseCase.authenticateUser(event.email, event.password);
 
         if (token.isNotEmpty) {
-          await PrefsServiceImp.saveUser(token);
+          await PrefsServiceImp.saveUserToken(token);
           final authResult = await PrefsServiceImp.isAuth();
           emit(AuthSignInState(authResult));
         }
