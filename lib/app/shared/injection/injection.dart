@@ -11,9 +11,10 @@ import 'package:measurement/app/modules/external/objects_service/objects_service
 import 'package:measurement/app/modules/infra/repositories/auth_repository_imp.dart';
 import 'package:measurement/app/modules/infra/repositories/camera_repository_imp.dart';
 import 'package:measurement/app/modules/infra/repositories/objects_repository_imp.dart';
-import 'package:measurement/app/modules/presentation/blocs/auth/auth_bloc.dart';
-import 'package:measurement/app/modules/presentation/blocs/create_object/create_object_bloc.dart';
-import 'package:measurement/app/modules/presentation/blocs/list_objects/list_objects_bloc.dart';
+import 'package:measurement/app/modules/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:measurement/app/modules/presentation/blocs/create_object_bloc/create_object_bloc.dart';
+import 'package:measurement/app/modules/presentation/blocs/list_objects_bloc/list_objects_bloc.dart';
+import 'package:measurement/app/modules/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:measurement/app/modules/presentation/controllers/auth_controller.dart';
 
 import '../../modules/domain/repositories/objects_repositories.dart';
@@ -43,9 +44,10 @@ class Injection {
     getIt.registerSingleton(ListObjectsBloc(getIt()));
     getIt.registerSingleton(AuthBloc(getIt()));
     getIt.registerSingleton(CreateObjectBloc(getIt()));
+    getIt.registerSingleton(UserBloc(getIt()));
 
     // CONTROLLERS
 
-    getIt.registerSingleton(AuthController(getIt()));
+    getIt.registerSingleton(AuthController(getIt(), getIt()));
   }
 }

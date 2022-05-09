@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
+import 'package:measurement/app/modules/external/auth_service/auth_service.dart';
+import 'package:measurement/app/modules/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:measurement/app/modules/presentation/controllers/auth_controller.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/auth/login_page.dart';
-import 'package:measurement/app/modules/presentation/ui/pages/home_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_input_form.dart';
 
@@ -29,6 +30,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final ValueNotifier _passwordNotifier = ValueNotifier("");
 
   final authController = GetIt.I.get<AuthController>();
+  final authBloc = GetIt.I.get<AuthBloc>();
+  final authService = GetIt.I.get<AuthService>();
 
   @override
   Widget build(BuildContext context) {
@@ -91,15 +94,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: double.infinity,
                 height: 45.h,
                 onPressed: () async {
-                  final result = await authController.signUp(
+                  await authService.createUser(
                     _nameNotifier.value,
                     _emailNotifier.value,
                     _passwordNotifier.value,
                   );
-
-                  if (result) {
-                    Navigator.pushReplacementNamed(context, HomePage.routeName);
-                  }
                 },
               ),
               SizedBox(height: 10.h),
@@ -125,10 +124,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             fontSize: 15.sp,
                           ),
                         ),
-                        onPressed: () => Navigator.pushReplacementNamed(
-                          context,
-                          LoginPage.routeName,
-                        ),
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            LoginPage.routeName,
+                          );
+                        },
                       )
                     ],
                   ),

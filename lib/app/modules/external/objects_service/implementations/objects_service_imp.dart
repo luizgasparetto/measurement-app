@@ -18,12 +18,10 @@ class ObjectsServiceImp implements ObjectsService {
 
   @override
   Future<void> createObject(FormData formData, String token) async {
-    final response = await dio.post(
+    await dio.post(
       "$urlAPI/objects",
       data: formData,
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
-
-    print(response.statusCode);
   }
 }

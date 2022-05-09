@@ -1,10 +1,12 @@
-import 'package:measurement/app/modules/external/auth_service/implementations/prefs_service_imp.dart';
-import 'package:measurement/app/modules/presentation/blocs/auth/auth_bloc.dart';
+import 'package:measurement/app/modules/external/shared_pref_service/prefs_service_imp.dart';
+import 'package:measurement/app/modules/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:measurement/app/modules/presentation/blocs/user_bloc/user_bloc.dart';
 
 class AuthController {
   final AuthBloc authBloc;
+  final UserBloc userBloc;
 
-  AuthController(this.authBloc);
+  AuthController(this.authBloc, this.userBloc);
 
   Future<bool> signIn(String email, String password) async {
     authBloc.add(
@@ -14,24 +16,7 @@ class AuthController {
       ),
     );
 
-    return await PrefsServiceImp.isAuth();
-  }
-
-  Future<bool> signUp(String name, String email, String password) async {
-    authBloc.add(
-      AuthSignUpEvent(
-        name: name,
-        email: email,
-        password: email,
-      ),
-    );
-
-    authBloc.add(
-      AuthSignInEvent(
-        email: email,
-        password: password,
-      ),
-    );
+    // userBloc.add(GetUserInformationEvent());
 
     return await PrefsServiceImp.isAuth();
   }

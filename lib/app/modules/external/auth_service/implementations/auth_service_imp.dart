@@ -16,14 +16,11 @@ class AuthServiceImp implements AuthService {
 
   @override
   Future<void> createUser(String name, String email, String password) async {
-    await dio.post(
-      '$urlAPI/user',
-      data: {
-        'name': name,
-        'email': email,
-        'password': password,
-      },
-    );
+    await dio.post("$urlAPI/user", data: {
+      'name': name,
+      'email': email,
+      'password': password,
+    });
   }
 
   @override
@@ -39,7 +36,7 @@ class AuthServiceImp implements AuthService {
   @override
   Future<Map<String, dynamic>> getUser(String token) async {
     final response = await dio.get(
-      '$urlAPI/users',
+      '$urlAPI/user',
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
 

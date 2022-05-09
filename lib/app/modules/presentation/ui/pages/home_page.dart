@@ -6,7 +6,8 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:iconly/iconly.dart';
-import 'package:measurement/app/modules/presentation/blocs/list_objects/list_objects_bloc.dart';
+import 'package:measurement/app/modules/presentation/blocs/list_objects_bloc/list_objects_bloc.dart';
+import 'package:measurement/app/modules/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/user_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_camera_card.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_object_card.dart';
@@ -72,13 +73,37 @@ class HomePage extends StatelessWidget {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: 10.w),
-                          child: Text(
-                            "Hello Jacob",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 28.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          child: BlocBuilder<UserBloc, UserState>(
+                            builder: ((context, state) {
+                              if (state is UserLoadingState) {
+                                return Text(
+                                  "Hello",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 28.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                );
+                              } else if (state is UserLoadedState) {
+                                return Text(
+                                  "Hello ${state.user.name}",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 28.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                );
+                              }
+
+                              return Text(
+                                "Hello :)",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 28.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              );
+                            }),
                           ),
                         ),
                         SizedBox(height: 5.h),

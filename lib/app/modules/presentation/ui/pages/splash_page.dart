@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:measurement/app/modules/external/auth_service/implementations/prefs_service_imp.dart';
+import 'package:measurement/app/modules/external/shared_pref_service/prefs_service_imp.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/auth/login_page.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/home_page.dart';
 

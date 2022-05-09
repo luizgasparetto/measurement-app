@@ -37,16 +37,16 @@ dependencies:
   get_it: ^7.2.0
   equatable: ^2.0.3
   flutter_bloc: ^8.0.1
-  font_awesome_flutter: ^10.1.0
-  flutter_screenutil: ^5.4.0+1
   flutter_dotenv: ^5.0.2
   shared_preferences: ^2.0.13
   image_picker: ^0.8.5
   dio: ^4.0.6
+  http: ^0.13.4
+  font_awesome_flutter: ^10.1.0
+  flutter_screenutil: ^5.4.0+1
   iconly: ^1.0.1
   flutter_svg: ^1.0.3
   shimmer: ^2.0.0
-  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:

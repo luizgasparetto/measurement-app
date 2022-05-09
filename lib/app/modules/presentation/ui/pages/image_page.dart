@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:measurement/app/modules/domain/repositories/camera_repository.dart';
-import 'package:measurement/app/modules/presentation/blocs/create_object/create_object_bloc.dart';
+import 'package:measurement/app/modules/presentation/blocs/create_object_bloc/create_object_bloc.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
 
 class ImagePage extends StatelessWidget {

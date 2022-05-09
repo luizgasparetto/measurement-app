@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:measurement/app/modules/domain/entities/object_entity.dart';
 import 'package:measurement/app/modules/domain/repositories/objects_repositories.dart';
-import 'package:measurement/app/modules/external/auth_service/implementations/prefs_service_imp.dart';
+import 'package:measurement/app/modules/external/shared_pref_service/prefs_service_imp.dart';
 import 'package:measurement/app/modules/external/objects_service/objects_service.dart';
 import 'package:measurement/app/modules/infra/dtos/object_dto.dart';
 import "package:http_parser/http_parser.dart";
