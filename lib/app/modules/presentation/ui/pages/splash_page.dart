@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:measurement/app/modules/external/shared_pref_service/prefs_service_imp.dart';
+import 'package:measurement/app/modules/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/auth/login_page.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/home_page.dart';
 
@@ -20,17 +22,22 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final userBloc = GetIt.I.get<UserBloc>();
+
   @override
   void initState() {
     super.initState();
     Future.wait([
       PrefsServiceImp.isAuth(),
       Future.delayed(const Duration(seconds: 2)),
-    ]).then(
-      (value) => value[0]
-          ? Navigator.pushReplacementNamed(context, HomePage.routeName)
-          : Navigator.pushReplacementNamed(context, LoginPage.routeName),
-    );
+    ]).then((value) {
+      if (value[0]) {
+        userBloc.add(GetUserInformationEvent());
+        Navigator.pushReplacementNamed(context, HomePage.routeName);
+      } else {
+        Navigator.pushReplacementNamed(context, LoginPage.routeName);
+      }
+    });
   }
 
   @override

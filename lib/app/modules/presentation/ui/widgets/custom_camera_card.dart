@@ -72,7 +72,7 @@ class CustomCameraCard extends StatelessWidget {
                   primary: Theme.of(context).primaryColorDark,
                 ),
                 onPressed: () async {
-                  await homeRepository.selectImage(ImageSource.gallery);
+                  await homeRepository.selectImage(ImageSource.camera);
                   Navigator.pushNamed(context, '/image');
                 },
               ),

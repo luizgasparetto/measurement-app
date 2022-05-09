@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconly/iconly.dart';
 import 'package:measurement/app/modules/external/shared_pref_service/prefs_service_imp.dart';
+import 'package:measurement/app/modules/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/auth/login_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_list_tile.dart';
 
@@ -30,7 +32,7 @@ class UserPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            //SizedBox(height: 20.h),
+            SizedBox(height: 50.h),
             Center(
               child: Container(
                 width: 130.w,
@@ -47,13 +49,29 @@ class UserPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 15.h),
-            Text(
-              "Jacob Moura",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 22.sp,
-              ),
+            BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                if (state is UserLoadingState || state is UserErrorState) {
+                  return Text(
+                    "User Account",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22.sp,
+                    ),
+                  );
+                } else if (state is UserLoadedState) {
+                  return Text(
+                    state.user.name,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22.sp,
+                    ),
+                  );
+                }
+                return Container();
+              },
             ),
             SizedBox(height: 50.h),
             const CustomListTile(titleTile: 'Account'),

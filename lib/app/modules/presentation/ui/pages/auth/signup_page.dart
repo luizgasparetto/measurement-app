@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import 'package:measurement/app/modules/external/auth_service/auth_service.dart';
-import 'package:measurement/app/modules/presentation/blocs/auth_bloc/auth_bloc.dart';
-import 'package:measurement/app/modules/presentation/controllers/auth_controller.dart';
+import 'package:measurement/app/modules/domain/useCases/user/auth_usecase.dart';
+import 'package:measurement/app/modules/infra/exceptions/auth_errors.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/auth/login_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_input_form.dart';
@@ -29,9 +28,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final ValueNotifier _emailNotifier = ValueNotifier("");
   final ValueNotifier _passwordNotifier = ValueNotifier("");
 
-  final authController = GetIt.I.get<AuthController>();
-  final authBloc = GetIt.I.get<AuthBloc>();
-  final authService = GetIt.I.get<AuthService>();
+  final authUseCase = GetIt.I.get<AuthUseCase>();
 
   @override
   Widget build(BuildContext context) {
@@ -94,11 +91,17 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: double.infinity,
                 height: 45.h,
                 onPressed: () async {
-                  await authService.createUser(
-                    _nameNotifier.value,
-                    _emailNotifier.value,
-                    _passwordNotifier.value,
-                  );
+                  try {
+                    await authUseCase.createUser(
+                      _nameNotifier.value,
+                      _emailNotifier.value,
+                      _passwordNotifier.value,
+                    );
+                  } on AuthException catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(e.errorMessage)),
+                    );
+                  }
                 },
               ),
               SizedBox(height: 10.h),

@@ -190,7 +190,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                //SizedBox(height: 10.h),
+                SizedBox(height: 10.h),
                 BlocBuilder<ListObjectsBloc, ListObjectsState>(
                   builder: (context, state) {
                     if (state is ListObjectsLoadingState) {

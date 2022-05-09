@@ -110,6 +110,7 @@ class ImagePage extends StatelessWidget {
                         File(cameraRepository.image.value!.path),
                       ),
                     );
+                    Navigator.pop(context);
                   },
                 )
               ],

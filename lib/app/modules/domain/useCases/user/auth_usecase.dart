@@ -7,20 +7,36 @@ class AuthUseCase {
 
   AuthUseCase(this.authRepository);
 
-  //   if (name.isEmpty || email.isEmpty || password.isEmpty) {
-  //   throw AuthException.fromCode('missing-fields');
-  // }
+  Future<void> createUser(String name, String email, String password) async {
+    if (name.isEmpty || email.isEmpty || password.isEmpty) {
+      throw AuthException.fromCode('missing-fields');
+    }
 
-  // if (!email.contains("@")) {
-  //   throw AuthException.fromCode('invalid-email');
-  // }
+    if (!email.contains("@")) {
+      throw AuthException.fromCode('invalid-email');
+    }
+
+    try {
+      await authRepository.createUser(name, email, password);
+    } catch (e) {
+      throw AuthException.fromCode('user-exist');
+    }
+  }
 
   Future<String> authenticateUser(String email, String password) async {
     if (email.isEmpty || password.isEmpty) {
       throw AuthException.fromCode('missing-fields');
     }
 
-    return await authRepository.authenticateUser(email, password);
+    if (!email.contains("@")) {
+      throw AuthException.fromCode('invalid-email');
+    }
+
+    try {
+      return await authRepository.authenticateUser(email, password);
+    } catch (e) {
+      throw AuthException.fromCode('invalid-credentials');
+    }
   }
 
   Future<UserEntity> getUser() async {

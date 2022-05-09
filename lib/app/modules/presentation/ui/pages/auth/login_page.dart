@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import 'package:measurement/app/modules/presentation/controllers/auth_controller.dart';
+import 'package:measurement/app/modules/domain/useCases/user/auth_usecase.dart';
+import 'package:measurement/app/modules/infra/exceptions/auth_errors.dart';
+import 'package:measurement/app/modules/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/auth/signup_page.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/home_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
@@ -27,7 +29,8 @@ class _LoginPageState extends State<LoginPage> {
   final ValueNotifier _emailNotifier = ValueNotifier("");
   final ValueNotifier _passwordNotifier = ValueNotifier("");
 
-  final authController = GetIt.I.get<AuthController>();
+  final userBloc = GetIt.I.get<UserBloc>();
+  final authUseCase = GetIt.I.get<AuthUseCase>();
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +87,23 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 height: 45.h,
                 onPressed: () async {
-                  final result = await authController.signIn(
-                    _emailNotifier.value,
-                    _passwordNotifier.value,
-                  );
+                  try {
+                    final result = await authUseCase.authenticateUser(
+                      _emailNotifier.value,
+                      _passwordNotifier.value,
+                    );
 
-                  if (result) {
-                    Navigator.pushReplacementNamed(context, HomePage.routeName);
+                    if (result.isNotEmpty) {
+                      userBloc.add(GetUserInformationEvent());
+                      Navigator.pushReplacementNamed(
+                        context,
+                        HomePage.routeName,
+                      );
+                    }
+                  } on AuthException catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(e.errorMessage),
+                    ));
                   }
                 },
               ),

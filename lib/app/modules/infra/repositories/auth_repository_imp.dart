@@ -10,6 +10,11 @@ class AuthRepositoryImp implements AuthRepository {
   AuthRepositoryImp(this.authService);
 
   @override
+  Future<void> createUser(String name, String email, String password) async {
+    await authService.createUser(name, email, password);
+  }
+
+  @override
   Future<String> authenticateUser(String email, String password) async {
     final authResponse = await authService.authenticateUser(email, password);
 
