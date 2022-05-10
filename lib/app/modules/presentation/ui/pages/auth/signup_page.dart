@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:measurement/app/modules/domain/useCases/user/auth_usecase.dart';
 import 'package:measurement/app/modules/infra/exceptions/auth_errors.dart';
+import 'package:measurement/app/modules/presentation/blocs/user_bloc/user_bloc.dart';
 import 'package:measurement/app/modules/presentation/ui/pages/auth/login_page.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_elevated_button.dart';
 import 'package:measurement/app/modules/presentation/ui/widgets/custom_input_form.dart';
@@ -29,6 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final ValueNotifier _passwordNotifier = ValueNotifier("");
 
   final authUseCase = GetIt.I.get<AuthUseCase>();
+  final userBloc = GetIt.I.get<UserBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +98,15 @@ class _SignUpPageState extends State<SignUpPage> {
                       _nameNotifier.value,
                       _emailNotifier.value,
                       _passwordNotifier.value,
+                    );
+
+                    Navigator.pushReplacementNamed(
+                        context, LoginPage.routeName);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Account created successfully"),
+                      ),
                     );
                   } on AuthException catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
